@@ -1,0 +1,16 @@
+:host {
+  padding: 4px 36px;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  #logo, #logo > h1 {
+    color: rebeccapurple;
+    margin: 0;
+    text-decoration: none;
+    font-family: luminary, fantasy;
+    font-weight: normal;
+    letter-spacing: 2px;
+  }
+}

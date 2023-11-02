@@ -1,0 +1,81 @@
+<h2 class="text-primary">My ad orders</h2>
+<p-table [value]="adOrders"
+         dataKey="id"
+         [loading]="isLoading"
+         [scrollable]="true"
+         styleClass="p-datatable-striped"
+         responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width:10%">ID</th>
+      <th style="width:25%">Name</th>
+      <th style="width:15%" pSortableColumn="type">Type<p-sortIcon field="type"/></th>
+      <th style="width:25%" pSortableColumn="status">Status<p-sortIcon field="status"/></th>
+      <th style="width:13%" pSortableColumn="cost">Cost<p-sortIcon field="cost"/></th>
+      <th style="width:12%" pSortableColumn="onlyDesign">Only design<p-sortIcon field="onlyDesign"/></th>
+    </tr>
+    <tr>
+      <th>
+        <p-columnFilter type="text" field="id" [showMenu]="false"
+                        [showClearButton]="false" placeholder="Search..." />
+      </th>
+      <th>
+        <p-columnFilter type="text" field="name" [showMenu]="false" matchMode="contains"
+                        [showClearButton]="false" placeholder="Search..." />
+      </th>
+      <th>
+        <p-columnFilter field="type" [showMenu]="false" [showClearButton]="false">
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-dropdown
+              [ngModel]="value"
+              [options]="adTypes"
+              (onChange)="filter($event.value)"
+              placeholder="All"
+              [showClear]="true"
+              appendTo="body"
+            >
+              <ng-template let-option pTemplate="item">
+                <i class="{{getAdTypeIcon(option)}} mr-1"></i>{{option | titlecase}}
+              </ng-template>
+              <ng-template pTemplate="selectedItem">{{value | titlecase}}</ng-template>
+            </p-dropdown>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+      <th>
+        <p-columnFilter field="status" [showMenu]="false" [showClearButton]="false">
+          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <p-dropdown
+              [ngModel]="value"
+              [options]="statuses"
+              (onChange)="filter($event.value)"
+              placeholder="All"
+              [showClear]="true"
+              appendTo="body"
+            >
+              <ng-template let-option pTemplate="item">
+                <span class="ad-status {{option | lowercase}}">{{option.replace('_', ' ') | titlecase}}</span>
+              </ng-template>
+              <ng-template pTemplate="selectedItem">{{value.replace('_', ' ') | titlecase}}</ng-template>
+            </p-dropdown>
+          </ng-template>
+        </p-columnFilter>
+      </th>
+      <th></th>
+      <th>
+        <p-columnFilter type="boolean" field="onlyDesign" [showMenu]="false"
+                        [showClearButton]="false" placeholder="Search..." />
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-order>
+    <tr [pContextMenuRow]="order">
+      <td>{{order.id}}</td>
+      <td>{{order.name}}</td>
+      <td><i class="{{getAdTypeIcon(order.type)}} mr-1"></i>{{order.type | titlecase}}</td>
+      <td class="ad-status {{order.status | lowercase}}">{{order.status.replace('_', ' ') | titlecase}}</td>
+      <td>{{order.costCents / 100 | number}}$</td>
+      <td><app-boolean-icon [value]="order.onlyDesign"/></td>
+    </tr>
+  </ng-template>
+</p-table>

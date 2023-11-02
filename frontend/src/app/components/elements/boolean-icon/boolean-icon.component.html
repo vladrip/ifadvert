@@ -1,0 +1,6 @@
+<ng-container *ngIf="value; else falseIcon">
+  <i class="fa-regular fa-circle-check fa-lg true-icon" [ngClass]="{inverted: invertedColors, neutral: neutralTrue}"></i>
+</ng-container>
+<ng-template #falseIcon>
+  <i class="fa-regular fa-circle-xmark fa-lg false-icon" [ngClass]="{inverted: invertedColors, neutral: neutralFalse}"></i>
+</ng-template>

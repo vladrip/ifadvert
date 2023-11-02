@@ -1,0 +1,21 @@
+:host {
+  .true-icon {
+    color: green;
+
+    &.inverted {
+      color: red;
+    }
+  }
+
+  .false-icon {
+    color: red;
+
+    &.inverted {
+      color: green;
+    }
+  }
+
+  .neutral {
+    color: grey !important;
+  }
+}
