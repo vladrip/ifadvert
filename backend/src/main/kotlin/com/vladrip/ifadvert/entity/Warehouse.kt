@@ -5,18 +5,16 @@ import jakarta.persistence.*
 import org.hibernate.annotations.Type
 
 @Entity
-class Warehouse {
+class Warehouse(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
-
-    val latitude: Float? = null
-    val longitude: Float? = null
-
+    var id: Long,
+    var latitude: Float,
+    var longitude: Float,
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    val inventory: Map<String, Int> = HashMap()
-
+    var inventory: Map<String, Int> = mapOf()
+) {
     @OneToMany(mappedBy = "warehouse")
-    val adOrders: List<AdOrder>? = null
+    var adOrders: List<AdOrder> = listOf()
 }

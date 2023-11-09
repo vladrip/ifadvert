@@ -8,7 +8,8 @@ data class AdOrderDto (
     val type: AdOrder.AdType,
     val status: AdOrder.Status,
     val onlyDesign: Boolean,
-    val costCents: Int,
+    val costCents: Int?,
+    val budgetCents: Int,
     val designs: List<String>,
     val placements: List<AdOrder.Placement>,
 )

@@ -5,16 +5,16 @@ import jakarta.persistence.*
 import org.hibernate.annotations.Type
 
 @Entity
-class Contract {
+class Contract(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
-    val partyName: String? = null
-
+    var id: Long,
+    var partyName: String,
+) {
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    val documents: List<String>? = null
+    var documents: List<String> = listOf()
 
     @ManyToMany(mappedBy = "contracts")
-    val adOrders: List<AdOrder>? = null
+    var adOrders: List<AdOrder> = listOf()
 }

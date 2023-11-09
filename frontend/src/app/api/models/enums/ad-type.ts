@@ -1,0 +1,5 @@
+export enum AdType {
+  BILLBOARD = "BILLBOARD",
+  BROADCAST = "BROADCAST",
+  TRANSPORT = "TRANSPORT",
+}

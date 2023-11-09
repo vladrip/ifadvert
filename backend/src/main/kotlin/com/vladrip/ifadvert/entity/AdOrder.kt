@@ -7,54 +7,42 @@ import org.hibernate.annotations.Type
 import java.time.LocalDateTime
 
 @Entity
-class AdOrder {
+class AdOrder(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
-
-    val name: String = ""
-
+    var id: Long,
+    var name: String,
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    val type = AdType.BILLBOARD
-
+    var type: AdType = AdType.BILLBOARD,
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    val status = Status.CREATED
-
-    @Column(nullable = false)
-    val onlyDesign = false
-
-    val costCents: Int? = null
-
+    var status: Status = Status.NEW,
+    var onlyDesign: Boolean = false,
+    var costCents: Int?,
+    var budgetCents: Int,
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    val placements: List<Placement> = ArrayList()
-
+    var placements: List<Placement> = listOf(),
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    val designs: List<String> = ArrayList()
-
+    var designs: List<String> = listOf(),
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    var warehouse: Warehouse,
     @ManyToMany
     @JoinTable(
         name = "ad_order_user",
-        joinColumns = [JoinColumn(name = "user_id")],
-        inverseJoinColumns = [JoinColumn(name = "ad_order_id")]
+        joinColumns = [JoinColumn(name = "ad_order_id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id")]
     )
-    val users: List<User>? = null
-
+    var users: List<User> = listOf(),
     @ManyToMany
     @JoinTable(
         name = "ad_order_contract",
-        joinColumns = [JoinColumn(name = "contract_id")],
-        inverseJoinColumns = [JoinColumn(name = "ad_order_id")]
+        joinColumns = [JoinColumn(name = "ad_order_id")],
+        inverseJoinColumns = [JoinColumn(name = "contract_id")]
     )
-    val contracts: List<Contract>? = null
-
-    @ManyToOne
-    @JoinColumn(name = "warehouse_id")
-    val warehouse: Warehouse? = null
-
+    var contracts: List<Contract> = listOf(),
+) {
     enum class AdType {
         BILLBOARD,
         BROADCAST,
@@ -62,8 +50,8 @@ class AdOrder {
     }
 
     enum class Status {
-        CREATED,
-        UNDER_REVIEW,
+        NEW,
+        PROCESSING,
         AWAITING_PAYMENT,
         DESIGNING,
         AWAITING_CONFIRMATION,
@@ -94,7 +82,7 @@ class AdOrder {
             }
         }
 
-        data class VehiclePlacement(
+        data class TransportPlacement(
             val vehicleId: String,
             val type: VehicleType,
             override val description: String = "",

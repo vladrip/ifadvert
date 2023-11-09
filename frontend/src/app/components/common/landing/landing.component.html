@@ -1,0 +1,166 @@
+<header class="flex justify-content-between align-items-center px-6 py-3">
+  <div class="flex gap-5 align-items-center">
+    <a id="logo" href="/get-started">
+      <h1>IFAdvert</h1>
+    </a>
+    <ul class="list-none flex gap-6">
+      <li>
+        <a routerLink="/app">App</a>
+      </li>
+      <li>
+        <a routerLink="/" fragment="services">Services</a>
+      </li>
+      <li>
+        <a routerLink="/" fragment="aboutUs">About us</a>
+      </li>
+    </ul>
+  </div>
+  <div class="flex gap-5">
+    <button pButton pRipple label="Login" routerLink="/login" class="p-button-text p-button-round"></button>
+    <button pButton pRipple label="Register" class="p-button-rounded"></button>
+  </div>
+</header>
+
+<section id="hero" class="flex justify-content-between gap-4">
+  <div>
+    <h1 class="text-6xl font-bold text-gray-900 line-height-2">
+      <span class="font-light block">Advertisement company</span>
+      <span class="text-primary">IFAdvert</span>
+    </h1>
+    <p class="font-normal text-2xl line-height-3 md:mt-3 text-gray-700">Your one-step solution for all your advertising
+      needs.</p>
+    <button pButton pRipple type="button" label="Get Started" routerLink="/app"
+            class="p-button-rounded bg-primary text-xl mt-3 px-3"></button>
+  </div>
+  <div class="align-self-center max-h-20rem" style="max-width: 43rem">
+    <img ngSrc="assets/landing/advertisement-scheme.jpeg" alt="bus ad" fill="true"
+         class="relative bg-contain border-round-2xl"/>
+  </div>
+</section>
+
+<section id="services" class="grid px-2 mt-8 pt-5">
+  <h1 class="col-12 text-center text-primary mb-3">Ways to advertise your product</h1>
+  <div class="col-12 md:col-6 lg:col-4">
+    <p-card header="Billboards" subheader="Huge choice of billboard">
+      <img ngSrc="assets/landing/billboard-advertising.jpg" alt="billboard" fill="true" class="relative bg-contain"/>
+      <p>Billboard advertising is a powerful tool for reaching a large audience and creating brand awareness. It is a
+        cost-effective way to reach a wide range of people, and it can be very effective in driving traffic to your
+        website or business.<br><br><b>Here are some of the benefits of billboard advertising:</b></p>
+      <ul>
+        <li><b>High exposure:</b> Billboards are seen by millions of people every day.</li>
+        <li><b>Visual impact:</b> Billboards are large and eye-catching, so they can make a big impact.</li>
+        <li><b>Targeted advertising:</b> Billboards can be placed in specific locations to reach a particular audience.
+        </li>
+        <li><b>Cost-effective:</b> Billboards are a relatively inexpensive way to reach a large audience.</li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <div class="flex justify-content-between">
+          <h4 class="my-2">Price range:</h4>
+          <h4 class="text-primary my-2">800$ – 10000$</h4>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+  <div class="col-12 md:col-6 lg:col-4">
+    <p-card header="Transport" subheader="Buses, trucks, trams, metro">
+      <img ngSrc="assets/landing/metro-advertising.jpg" alt="transport" fill="true" class="relative bg-contain"/>
+      <p>
+        Transport advertising, also known as transit advertising, is a form of out-of-home (OOH) advertising that
+        utilizes
+        various modes of public transportation to display advertisements to passengers and commuters. This includes
+        buses,
+        trains, subways, taxis, and even airports.<br><br><b>Benefits of Transport Advertising:</b></p>
+      <ul>
+        <li><b>High frequency:</b> Passengers are exposed to transport advertisements multiple times throughout their
+          journeys, increasing brand recall and familiarity.
+        </li>
+        <li><b>Targeted audience:</b> Advertisers can strategically select transport routes and vehicles to reach
+          specific
+          demographics and geographic locations.
+        </li>
+        <li><b>Visual impact:</b> Creative and eye-catching advertisements can stand out amidst the captive audience,
+          making a lasting impression.
+        </li>
+        <li><b>Measurable results:</b> Transport advertising campaigns can be tracked and measured using various
+          metrics,
+          such as passenger traffic, ad visibility, and brand recall, allowing advertisers to assess campaign
+          effectiveness.
+        </li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <div class="flex justify-content-between">
+          <h4 class="my-2">Bus:</h4>
+          <h4 class="text-primary my-2">50$ – 4000$</h4>
+        </div>
+        <div class="flex justify-content-between">
+          <h4 class="my-2">Truck:</h4>
+          <h4 class="text-primary my-2">800$ – 3600$</h4>
+        </div>
+        <div class="flex justify-content-between">
+          <h4 class="my-2">Metro:</h4>
+          <h4 class="text-primary my-2">400$ – 2500$</h4>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+  <div class="col-12 md:col-6 lg:col-4">
+    <p-card header="TV & Radio" subheader="TV channels and radio stations">
+      <img ngSrc="assets/landing/tv-advertising.jpg" alt="tv and radio" fill="true" class="relative bg-contain"/>
+      <p>Television advertising is a form of advertising that utilizes television programs to deliver messages to
+        viewers.
+        It is a mass medium that can reach a large audience very quickly. Television ads can be very creative and
+        engaging, and they can be a powerful way to build brand awareness and promote products or services.
+        <br><br><b>Benefits of tv and radio advertising:</b></p>
+      <ul>
+        <li><b>Targeted audience:</b> tv and radio advertising can be very effective in reaching a specific audience.
+        </li>
+        <li><b>Creative potential:</b> tv and radio ads can be very creative and engaging, which can help them to
+          capture the attention of listeners and watchers.
+        </li>
+        <li><b>Brand building:</b> tv and radio ads can be very effective in building brand awareness and promoting
+          products or services.
+        </li>
+      </ul>
+      <ng-template pTemplate="footer">
+        <div class="flex justify-content-between">
+          <h4 class="my-2">Television:</h4>
+          <h4 class="text-primary my-2">10$ – 90$ per 1000 views</h4>
+        </div>
+        <div class="flex justify-content-between">
+          <h4 class="my-2">Radio:</h4>
+          <h4 class="text-primary my-2">10$ – 650$ per 60-second spot</h4>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+
+</section>
+
+<section id="aboutUs" class="mt-8">
+  <h1 class="text-center text-primary">About us</h1>
+  <p class="text-lg">&nbsp;&nbsp;&nbsp;&nbsp; At IFAdvert, we are passionate about the power of advertising to connect
+    brands with their
+    audiences and drive business results. We are a team of experienced professionals who are dedicated to helping our
+    clients achieve their marketing goals through innovative and effective advertising campaigns.
+    <br>&nbsp;&nbsp;&nbsp;&nbsp; We believe that advertising is not just about selling products and services; it's about
+    building relationships
+    and creating meaningful connections with consumers. We take a strategic approach to advertising, carefully
+    considering our clients' target audiences, brand messaging, and overall marketing objectives.</p>
+
+  <h3 class="text-primary mt-6">Our Mission</h3>
+  <p class="text-lg">Our mission is to help our clients achieve their marketing goals through innovative and effective
+    advertising campaigns.</p>
+
+  <h3 class="text-primary mt-6">Our Values</h3>
+  <p class="text-lg">We are committed to the following values:</p>
+  <ul class="text-lg">
+    <li><b>Creativity:</b> We believe in the power of creativity to break through the clutter and capture the attention
+      of our clients' target audiences.<br><br>
+    </li>
+    <li><b>Effectiveness:</b> We are focused on delivering results for our clients. We measure the success of our
+      campaigns against clear and measurable objectives.<br><br>
+    </li>
+    <li><b>Integrity:</b> We are committed to building relationships with our clients based on trust and respect.<br><br></li>
+    <li><b>Innovation:</b> We are constantly looking for new and innovative ways to help our clients succeed.<br><br></li>
+  </ul>
+</section>

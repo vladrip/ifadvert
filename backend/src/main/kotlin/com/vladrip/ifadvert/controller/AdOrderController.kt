@@ -1,8 +1,8 @@
 package com.vladrip.ifadvert.controller
 
-import com.vladrip.ifadvert.dto.AdOrderDto
 import com.vladrip.ifadvert.service.AdOrderService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -12,8 +12,9 @@ class AdOrderController (
     private val adOrderService: AdOrderService
 ) {
 
-    @GetMapping
-    fun getAll(): List<AdOrderDto> {
-        return adOrderService.getAll()
-    }
+    @GetMapping //TODO: get id from jwt
+    fun getAll() = adOrderService.getAll(1)
+
+    @GetMapping("/{id}")
+    fun get(@PathVariable id: Long) = adOrderService.get(id)
 }

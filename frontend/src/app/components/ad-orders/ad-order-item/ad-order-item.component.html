@@ -1,0 +1,37 @@
+<p-progressSpinner *ngIf="!isLoaded"></p-progressSpinner>
+<div class="wrapper" *ngIf="isLoaded">
+  <p-card>
+    <h2 class="text-primary mt-0 mb-4 font-medium">
+      {{isEdit ? 'Edit' : 'Create'}} Advertisement Order
+      <ng-container *ngIf="isEdit"><b> #{{itemId}}</b></ng-container>
+    </h2>
+    <form #form="ngForm" class="flex flex-column gap-5 px-3 text-left" (ngSubmit)="form.valid && onSubmit()">
+      <div class="flex flex-column gap-2">
+        <label htmlfor="name">Name</label>
+        <input pInputText id="name" name="name" #name="ngModel" aria-describedby="name-help" [(ngModel)]="item.name"
+               placeholder="Food market billboards Chicago" [maxLength]="80" required>
+        <small id="name-help">For your convenience, think up a short name that describes your order</small>
+      </div>
+
+      <div class="flex gap-6">
+        <label class="m-0">Select advertisement type:</label>
+        <div *ngFor="let type of adTypes" class="field-checkbox">
+          <p-radioButton [inputId]="type" name="category" [value]="type" [(ngModel)]="item.type" />
+          <label [for]="type" class="ml-2"><i class="{{getAdTypeIcon(type)}}"></i> {{ type | titlecase }}</label>
+        </div>
+      </div>
+
+      <div class="flex justify-content-between align-items-center">
+        <div class="flex flex-column gap-2">
+          <label htmlfor="budget">Your budget</label>
+          <p-inputNumber [ngModel]="this.item.budgetCents / 100" (onInput)="onBudgetInput($event)"
+                         [required]="true" inputId="budget" name="budget" aria-describedby="budget-help"
+                         mode="currency" currency="USD" [min]="50" [max]="10000000" />
+          <small id="budget-help">Range: $50 - $1,000,000</small>
+        </div>
+        <p-checkbox id="only-design" name="onlyDesign" [value]="item.onlyDesign" label="Only design" />
+        <p-button type="submit" styleClass="px-5 py-3" [loading]="loading" label="{{isEdit ? 'Save changes' : 'Create'}}" />
+      </div>
+    </form>
+  </p-card>
+</div>

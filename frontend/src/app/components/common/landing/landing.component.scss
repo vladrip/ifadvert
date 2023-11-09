@@ -1,0 +1,32 @@
+#logo, #logo > h1 {
+  color: rebeccapurple;
+  margin: 0;
+  text-decoration: none;
+  font-family: luminary, fantasy;
+  font-weight: normal;
+  letter-spacing: 2px;
+}
+
+header li a {
+  margin: 0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: medium;
+  color: black;
+
+  &:hover {
+    color: rebeccapurple;
+    transition: 0.2s;
+  }
+}
+
+#hero {
+  padding: 50px 100px 200px;
+  background: linear-gradient(to right, #f0f5b8, #f7ff00, #904e95);
+  clip-path: ellipse(150% 87% at 93% 13%);
+}
+
+#aboutUs {
+  padding: 50px 10vw;
+  background: linear-gradient(to right, rgba(240, 245, 184, 0.5), rgba(247, 255, 0, 0.5), rgba(144, 78, 149, 0.5));
+}

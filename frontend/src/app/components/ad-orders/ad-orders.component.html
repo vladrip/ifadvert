@@ -1,10 +1,12 @@
-<h2 class="text-primary">My ad orders</h2>
-<p-table [value]="adOrders"
-         dataKey="id"
-         [loading]="isLoading"
-         [scrollable]="true"
-         styleClass="p-datatable-striped"
-         responsiveLayout="scroll">
+<div class="flex justify-content-between align-items-center">
+  <h2 class="text-primary">My ad orders</h2>
+  <p-button label="Add" icon="fa fa-plus" routerLink="item" styleClass="p-button-success px-4" />
+</div>
+
+<p-contextMenu #adOrderActions [model]="contextMenuItems"/>
+<p-table [value]="adOrders" dataKey="id" [loading]="isLoading" [scrollable]="true"
+         styleClass="p-datatable-striped" responsiveLayout="scroll" [contextMenu]="adOrderActions"
+         [(contextMenuSelection)]="selected" (onContextMenuSelect)="initContextMenu($event)">
   <ng-template pTemplate="header">
     <tr>
       <th style="width:10%">ID</th>
@@ -75,7 +77,14 @@
       <td><i class="{{getAdTypeIcon(order.type)}} mr-1"></i>{{order.type | titlecase}}</td>
       <td class="ad-status {{order.status | lowercase}}">{{order.status.replace('_', ' ') | titlecase}}</td>
       <td>{{order.costCents / 100 | number}}$</td>
-      <td><app-boolean-icon [value]="order.onlyDesign"/></td>
+      <td><app-boolean-icon [value]="order.onlyDesign" [neutralFalse]="true"/></td>
+    </tr>
+  </ng-template>
+  <ng-template *ngIf="adOrders.length === 0" pTemplate="emptymessage">
+    <tr>
+      <td colspan="20" class="text-center p-disabled">
+        Click "Add" button to create your first advertisement order!
+      </td>
     </tr>
   </ng-template>
 </p-table>

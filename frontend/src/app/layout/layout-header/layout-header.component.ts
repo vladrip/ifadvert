@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuItem } from "primeng/api";
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/AuthService';
 
 @Component({
   selector: 'app-layout-header',
@@ -10,11 +12,19 @@ export class LayoutHeaderComponent {
   menuItems: MenuItem[] = [
     {
       label: 'My ad orders',
-      icon: 'fa fa-briefcase'
+      icon: 'fa fa-briefcase',
+      command: () => this.router.navigate(['app/ad-orders']),
     },
     {
       label: 'Logout',
-      icon: 'fa fa-right-from-bracket'
+      icon: 'fa fa-right-from-bracket',
+      command: () => {
+        this.authService.logout()
+        return this.router.navigate(['login'])
+      },
     }
   ]
+
+  constructor(private router: Router, private authService: AuthService) {
+  }
 }

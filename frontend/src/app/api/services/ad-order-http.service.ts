@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { API } from "../../constants/constants";
-import { AdOrderDto } from "../models/ad-order-dto";
+import { AdOrder } from "../models/ad-order";
 
 @Injectable({providedIn: 'root'})
 export class AdOrderHttpService {
@@ -10,6 +10,11 @@ export class AdOrderHttpService {
   constructor(private http: HttpClient) {
   }
 
-  getAll() {return this.http.get<AdOrderDto[]>(this.URL);
+  getAll() {
+    return this.http.get<AdOrder[]>(this.URL);
+  }
+
+  get(id: number) {
+    return this.http.get<AdOrder>(`${this.URL}/${id}`)
   }
 }
