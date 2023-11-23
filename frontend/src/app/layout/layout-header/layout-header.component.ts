@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { MenuItem } from "primeng/api";
+import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/AuthService';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-layout-header',
@@ -13,14 +13,14 @@ export class LayoutHeaderComponent {
     {
       label: 'My ad orders',
       icon: 'fa fa-briefcase',
-      command: () => this.router.navigate(['app/ad-orders']),
+      command: () => this.router.createUrlTree(['/app/ad-orders']),
     },
     {
       label: 'Logout',
       icon: 'fa fa-right-from-bracket',
       command: () => {
         this.authService.logout()
-        return this.router.navigate(['login'])
+        this.router.createUrlTree(['/login'])
       },
     }
   ]

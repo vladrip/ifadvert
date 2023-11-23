@@ -1,5 +1,5 @@
 export enum VehicleType {
-  BUS,
-  TRUCK,
-  METRO,
+  BUS = "BUS",
+  TRUCK = "TRUCK",
+  METRO = "METRO",
 }

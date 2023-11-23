@@ -1,11 +1,11 @@
-<a id="logo" routerLink="/">
+<a id="logo" routerLink="/app/ad-orders">
   <h1>IFAdvert</h1>
 </a>
 
 <div class="flex align-items-center cursor-pointer">
   <p-avatar (click)="accountMenu.toggle($event)"
             icon="fa fa-user"
-            [style]="{color: 'white', 'background-color': 'mediumpurple'}"
+            [style]="{color: 'white', 'background-color': 'var(--primary-color)'}"
             styleClass="user-avatar"
             shape="circle"/>
   <p-menu #accountMenu [model]="menuItems" [popup]="true"/>

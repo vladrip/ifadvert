@@ -1,0 +1,43 @@
+::ng-deep.ad-status {
+  font-weight: 600;
+
+  &.new {
+    color: lightslategray;
+  }
+
+  &.processing {
+    color: royalblue;
+  }
+
+  &.awaiting_payment {
+    color: orange;
+  }
+
+  &.designing {
+    color: mediumpurple;
+  }
+
+  &.awaiting_confirmation {
+    color: orange;
+  }
+
+  &.completed {
+    color: green;
+  }
+
+  &.executing {
+    color: royalblue;
+  }
+
+  &.in_action {
+    color: green;
+  }
+
+  &.discontinued {
+    color: #e30d0d;
+  }
+
+  &.canceled {
+    color: #e30d0d;
+  }
+}

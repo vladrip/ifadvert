@@ -6,10 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
-import { Credentials } from '../../../models/Credentials';
-import { AuthService } from '../../../services/AuthService';
+import { Credentials } from '@appModels/Credentials';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -32,16 +32,17 @@ export class LoginComponent {
     email: '',
     password: ''
   }
-  isLoading: boolean = false
+  loading: boolean = true;
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
   login() {
-    this.isLoading = true;
+    console.log("login")
+    this.loading = true;
     this.authService.login(this.credentials)
       .pipe(
-        finalize(() => this.isLoading = false),
+        finalize(() => this.loading = false),
         takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.router.navigate(['/app/ad-orders']),

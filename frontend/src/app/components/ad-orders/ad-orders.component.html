@@ -1,29 +1,30 @@
 <div class="flex justify-content-between align-items-center">
   <h2 class="text-primary">My ad orders</h2>
-  <p-button label="Add" icon="fa fa-plus" routerLink="item" styleClass="p-button-success px-4" />
+  <p-button label="Add" icon="fa fa-plus" routerLink="item" styleClass="p-button-success px-4"/>
 </div>
 
 <p-contextMenu #adOrderActions [model]="contextMenuItems"/>
-<p-table [value]="adOrders" dataKey="id" [loading]="isLoading" [scrollable]="true"
+<p-table [value]="adOrders" dataKey="id" [loading]="loading"
          styleClass="p-datatable-striped" responsiveLayout="scroll" [contextMenu]="adOrderActions"
-         [(contextMenuSelection)]="selected" (onContextMenuSelect)="initContextMenu($event)">
+         [(contextMenuSelection)]="selected" (onContextMenuSelect)="initContextMenu()">
   <ng-template pTemplate="header">
     <tr>
-      <th style="width:10%">ID</th>
-      <th style="width:25%">Name</th>
-      <th style="width:15%" pSortableColumn="type">Type<p-sortIcon field="type"/></th>
-      <th style="width:25%" pSortableColumn="status">Status<p-sortIcon field="status"/></th>
-      <th style="width:13%" pSortableColumn="cost">Cost<p-sortIcon field="cost"/></th>
-      <th style="width:12%" pSortableColumn="onlyDesign">Only design<p-sortIcon field="onlyDesign"/></th>
+      <th style="width:10em" pSortableColumn="id">ID<p-sortIcon field="id"/></th>
+      <th style="width:20em">Name</th>
+      <th style="width:13em" pSortableColumn="type">Type<p-sortIcon field="type"/></th>
+      <th style="width:20em" pSortableColumn="status">Status<p-sortIcon field="status"/></th>
+      <th pSortableColumn="budget">Budget<p-sortIcon field="budget"/></th>
+      <th pSortableColumn="cost">Cost<p-sortIcon field="cost"/></th>
+      <th pSortableColumn="onlyDesign">Only design<p-sortIcon field="onlyDesign"/></th>
     </tr>
     <tr>
       <th>
-        <p-columnFilter type="text" field="id" [showMenu]="false"
-                        [showClearButton]="false" placeholder="Search..." />
+        <p-columnFilter type="text" field="id" [showMenu]="false" [matchMode]="FilterMatchMode.STARTS_WITH"
+                        [showClearButton]="false" placeholder="Search..."/>
       </th>
       <th>
-        <p-columnFilter type="text" field="name" [showMenu]="false" matchMode="contains"
-                        [showClearButton]="false" placeholder="Search..." />
+        <p-columnFilter type="text" field="name" [showMenu]="false" [matchMode]="FilterMatchMode.CONTAINS"
+                        [showClearButton]="false" placeholder="Search..."/>
       </th>
       <th>
         <p-columnFilter field="type" [showMenu]="false" [showClearButton]="false">
@@ -37,7 +38,7 @@
               appendTo="body"
             >
               <ng-template let-option pTemplate="item">
-                <i class="{{getAdTypeIcon(option)}} mr-1"></i>{{option | titlecase}}
+                <i class="{{getAdTypeIcon(option)}}"></i> {{option | titlecase}}
               </ng-template>
               <ng-template pTemplate="selectedItem">{{value | titlecase}}</ng-template>
             </p-dropdown>
@@ -58,15 +59,17 @@
               <ng-template let-option pTemplate="item">
                 <span class="ad-status {{option | lowercase}}">{{option.replace('_', ' ') | titlecase}}</span>
               </ng-template>
-              <ng-template pTemplate="selectedItem">{{value.replace('_', ' ') | titlecase}}</ng-template>
+              <ng-template let-option pTemplate="selectedItem">
+                <span class="ad-status {{option | lowercase}}">{{value.replace('_', ' ') | titlecase}}</span>
+              </ng-template>
             </p-dropdown>
           </ng-template>
         </p-columnFilter>
       </th>
       <th></th>
+      <th></th>
       <th>
-        <p-columnFilter type="boolean" field="onlyDesign" [showMenu]="false"
-                        [showClearButton]="false" placeholder="Search..." />
+        <p-columnFilter type="boolean" field="onlyDesign" [showMenu]="false" [showClearButton]="false"/>
       </th>
     </tr>
   </ng-template>
@@ -74,16 +77,22 @@
     <tr [pContextMenuRow]="order">
       <td>{{order.id}}</td>
       <td>{{order.name}}</td>
-      <td><i class="{{getAdTypeIcon(order.type)}} mr-1"></i>{{order.type | titlecase}}</td>
+      <td><i class="{{getAdTypeIcon(order.type)}}"></i> {{order.type | titlecase}}</td>
       <td class="ad-status {{order.status | lowercase}}">{{order.status.replace('_', ' ') | titlecase}}</td>
-      <td>{{order.costCents / 100 | number}}$</td>
-      <td><app-boolean-icon [value]="order.onlyDesign" [neutralFalse]="true"/></td>
+      <td>${{order.budgetCents / 100 | number}}</td>
+      <td>${{order.costCents / 100 | number}}</td>
+      <td>
+        <app-boolean-icon [value]="order.onlyDesign" [neutralFalse]="true"/>
+      </td>
     </tr>
   </ng-template>
-  <ng-template *ngIf="adOrders.length === 0" pTemplate="emptymessage">
+  <ng-template pTemplate="emptymessage">
     <tr>
       <td colspan="20" class="text-center p-disabled">
-        Click "Add" button to create your first advertisement order!
+        <ng-container *ngIf="adOrders.length === 0; else noElBySuchFilters">
+          Click "Add" button to create your first advertisement order!
+        </ng-container>
+        <ng-template #noElBySuchFilters>No orders found by such filters.</ng-template>
       </td>
     </tr>
   </ng-template>

@@ -13,8 +13,8 @@ class Contract(
 ) {
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    var documents: List<String> = listOf()
+    var documents: MutableList<String> = mutableListOf()
 
     @ManyToMany(mappedBy = "contracts")
-    var adOrders: List<AdOrder> = listOf()
+    var adOrders: MutableList<AdOrder> = mutableListOf()
 }

@@ -24,6 +24,8 @@ configurations {
 }
 
 dependencies {
+    val jjwtVersion = "0.12.3"
+
     implementation(project(":frontend"))
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -37,9 +39,12 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     kapt("org.mapstruct:mapstruct-processor:1.5.5.Final")
     runtimeOnly("org.postgresql:postgresql")
+    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+    implementation("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+    implementation("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
+    implementation(kotlin("script-runtime"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
-    implementation(kotlin("script-runtime"))
 }
 
 tasks.withType<KotlinCompile> {

@@ -2,11 +2,11 @@ import { Direction } from './enums/direction';
 import { VehicleType } from './enums/vehicle-type';
 
 export interface Placement {
-  description: String;
+  description: string;
 }
 
 export interface BillboardPlacement extends Placement {
-  billboardId: number;
+  boardId: number;
   latitude: number;
   longitude: number;
   direction: Direction;
@@ -16,6 +16,7 @@ export interface BillboardPlacement extends Placement {
 export interface TransportPlacement extends Placement {
   vehicleId: string;
   type: VehicleType;
+  picture: string;
 }
 
 export interface BroadcastPlacement extends Placement {

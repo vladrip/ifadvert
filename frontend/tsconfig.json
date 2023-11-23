@@ -2,7 +2,21 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@models/*": ["app/api/models/*"],
+      "@apiServices/*": ["app/api/services/*"],
+      "@components/*": ["app/components/*"],
+      "@constants/*": ["app/constants/*"],
+      "@layout/*": ["app/layout/*"],
+      "@services/*": ["app/services/*"],
+      "@guards/*": ["app/guards/*"],
+      "@interceptors/*": ["app/interceptors/*"],
+      "@utils/*": ["app/utils/*"],
+      "@pipes/*": ["app/pipes/*"],
+      "@appModels/*": ["app/models/*"],
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,

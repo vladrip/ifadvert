@@ -1,15 +1,13 @@
-import { AdType } from './enums/ad-type';
 import { Status } from './enums/status';
-import { Placement } from './placement';
+import { BillboardPlacement, BroadcastPlacement, TransportPlacement } from './placement';
+import { FormAdOrder } from '@models/form-ad-order';
 
-export class AdOrder {
+export class AdOrder extends FormAdOrder {
   id?: number;
-  name: string = '';
-  type: AdType = AdType.BILLBOARD;
   status: Status = Status.NEW;
-  onlyDesign: boolean = false;
-  costCents: number = 0;
-  budgetCents: number = 0;
+  costCents?: number;
   designs: string[] = [];
-  placements: Placement[] = [];
+  placements: PlacementType[] = [];
 }
+
+type PlacementType = BillboardPlacement & TransportPlacement & BroadcastPlacement;

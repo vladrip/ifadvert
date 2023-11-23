@@ -1,0 +1,19 @@
+@import "ts-enums";
+
+::ng-deep.tag {
+  font-size: medium;
+  padding: 0.5rem 1rem;
+  background: white;
+  color: var(--primary-color);
+
+  .p-tag-icon {
+    margin-right: 0.5rem;
+  }
+}
+
+::ng-deep.p-galleria {
+  .p-galleria-item-nav {
+    color: var(--primary-color);
+    backdrop-filter: brightness(0.8);
+  }
+}

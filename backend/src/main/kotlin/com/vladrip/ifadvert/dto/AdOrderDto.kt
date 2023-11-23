@@ -2,7 +2,7 @@ package com.vladrip.ifadvert.dto
 
 import com.vladrip.ifadvert.entity.AdOrder
 
-data class AdOrderDto (
+data class AdOrderDto(
     val id: Long?,
     val name: String,
     val type: AdOrder.AdType,

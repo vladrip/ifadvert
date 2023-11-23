@@ -1,0 +1,237 @@
+<p-progressSpinner *ngIf="loading"/>
+<ng-container *ngIf="!loading">
+  <div class="flex justify-content-between align-items-center mb-4">
+    <div class="flex gap-5 align-items-center">
+      <p-button icon="fa fa-arrow-left fa-lg" routerLink="/app/ad-orders" />
+      <p-tag [value]="item.type | titlecase" styleClass="tag">
+        <ng-template pTemplate="icon"><i [class]="getAdTypeIcon(item.type) + ' fa-xl'"></i></ng-template>
+      </p-tag>
+      <p-tag *ngIf="item.onlyDesign" value="Only design" styleClass="tag">
+        <ng-template pTemplate="icon"><i class="fa fa-paintbrush fa-lg"></i></ng-template>
+      </p-tag>
+      <p-tag [value]="item.status.replace('_', ' ') | titlecase"
+             styleClass="bg-white tag ad-status {{item.status | lowercase}}">
+        <ng-template pTemplate="icon"><i class="fa fa-circle fa-lg ad-status {{item.status | lowercase}}"></i>
+        </ng-template>
+      </p-tag>
+    </div>
+    <p-button icon="fa fa-pencil" routerLink="../item/{{itemId}}"></p-button>
+  </div>
+
+  <h2 class="text-primary">{{item.name}}</h2>
+
+  <div class="flex justify-content-between align-items-center my-6">
+    <div class="flex flex-column gap-2">
+      <label htmlfor="budget">Budget</label>
+      <p-inputNumber [ngModel]="this.item.budgetCents && this.item.budgetCents / 100" [readonly]="true"
+                     inputId="budget" name="budget" mode="currency" currency="USD"/>
+    </div>
+    <div class="flex flex-column gap-2">
+      <label htmlfor="cost">Cost</label>
+      <p-inputNumber [ngModel]="this.item.costCents && this.item.costCents / 100" [readonly]="true"
+                     inputId="cost" name="cost" mode="currency" currency="USD"/>
+    </div>
+  </div>
+
+  <div *ngIf="item.designs.length > 0" class="text-center my-5">
+    <h3 class="text-primary text-center mb-2">Designs</h3>
+    <p-galleria [value]="item.designs" [responsiveOptions]="responsiveOptions" [circular]="true" [autoPlay]="true" [showItemNavigatorsOnHover]="true"
+                [showThumbnails]="false" [showItemNavigators]="true" [showIndicators]="true" indicatorsPosition="top" styleclass=""
+                [containerStyle]="{'width': '1200px', 'height': '600px', 'border': '4px solid var(--primary-color)', 'margin': '0 auto'}">
+      <ng-template pTemplate="item" let-design>
+          <img ngSrc="{{design}}" width="1000" height="500" style="object-fit: contain" alt="design image"/>
+      </ng-template>
+    </p-galleria>
+  </div>
+
+  <div *ngIf="!item.onlyDesign" class="mt-6">
+    <h3 class="text-primary text-center mb-2">Placements</h3>
+    <p-table [value]="item.placements" dataKey="id" [loading]="loading"
+             styleClass="p-datatable-striped" responsiveLayout="scroll" [ngSwitch]="item.type">
+      <ng-container *ngSwitchCase="AdType.BILLBOARD">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Board ID</th>
+            <th>Picture</th>
+            <th pSortableColumn="direction">Direction
+              <p-sortIcon field="direction"/>
+            </th>
+            <th>Place</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <th>
+              <p-columnFilter type="text" field="boardId" [showMenu]="false" [matchMode]="FilterMatchMode.STARTS_WITH"
+                              [showClearButton]="false" placeholder="Search..."/>
+            </th>
+            <th></th>
+            <th>
+              <p-columnFilter field="direction" [showMenu]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown
+                    [ngModel]="value"
+                    [options]="directions"
+                    (onChange)="filter($event.value)"
+                    placeholder="All"
+                    [showClear]="true"
+                    appendTo="body"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <i class="{{getDirectionIcon(option)}}"></i> {{option | titlecase}}
+                    </ng-template>
+                    <ng-template pTemplate="selectedItem">{{value | titlecase}}</ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th></th>
+            <th>
+              <p-columnFilter type="text" field="descriptions" [showMenu]="false" [matchMode]="FilterMatchMode.CONTAINS"
+                              [showClearButton]="false" placeholder="Search..."/>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-placement>
+          <tr>
+            <td>{{placement.boardId}}</td>
+            <td>
+              <p-image [src]="placement.picture" alt="billboard picture" width="100" [preview]="true"/>
+            </td>
+            <td><i class="{{getDirectionIcon(placement.direction)}}"></i> {{placement.direction | titlecase}}</td>
+            <td></td>
+            <td>{{placement.description}}</td>
+          </tr>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="AdType.TRANSPORT">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Vehicle ID</th>
+            <th>Picture</th>
+            <th pSortableColumn="type">Type
+              <p-sortIcon field="type"/>
+            </th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <th>
+              <p-columnFilter type="text" field="vehicleId" [showMenu]="false" [matchMode]="FilterMatchMode.STARTS_WITH"
+                              [showClearButton]="false" placeholder="Search..."/>
+            </th>
+            <th></th>
+            <th>
+              <p-columnFilter field="type" [showMenu]="false" [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-dropdown
+                    [ngModel]="value"
+                    [options]="vehicleTypes"
+                    (onChange)="filter($event.value)"
+                    placeholder="All"
+                    [showClear]="true"
+                    appendTo="body"
+                  >
+                    <ng-template let-option pTemplate="item">
+                      <i [class]="getVehicleTypeIcon(option)"></i> {{option | titlecase}}
+                    </ng-template>
+                    <ng-template pTemplate="selectedItem">{{value | titlecase}}</ng-template>
+                  </p-dropdown>
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="description" [showMenu]="false" [matchMode]="FilterMatchMode.CONTAINS"
+                              [showClearButton]="false" placeholder="Search..."/>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-placement>
+          <tr>
+            <td>{{placement.vehicleId}}</td>
+            <td>
+              <p-image [src]="placement.picture" alt="vehicle picture" width="100" [preview]="true"/>
+            </td>
+            <td>
+              <i [class]="getVehicleTypeIcon(placement.type)"></i> {{placement.type | titlecase}}
+            </td>
+            <td>{{placement.description}}</td>
+          </tr>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="AdType.BROADCAST">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Channel</th>
+            <th>Radio</th>
+            <th pSortableColumn="nextBroadcast">Next Broadcast
+              <p-sortIcon field="nextBroadcast"/>
+            </th>
+            <th pSortableColumn="durationSec">Duration, s
+              <p-sortIcon field="durationSec"/>
+            </th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <th>
+              <p-columnFilter type="text" field="vehicleId" [showMenu]="false" [matchMode]="FilterMatchMode.CONTAINS"
+                              [showClearButton]="false" placeholder="Search..."/>
+            </th>
+            <th>
+              <p-columnFilter type="boolean" field="isRadio" [showMenu]="false" [showClearButton]="false"/>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="nextBroadcast" matchMode="dateRangeFilter" [showMenu]="false"
+                              [showClearButton]="false">
+                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                  <p-calendar
+                    #updateDateFilter
+                    [ngModel]="value"
+                    selectionMode="range"
+                    [readonlyInput]="true"
+                    dateFormat="dd.mm.yy"
+                    appendTo="body"
+                    (onSelect)="filter(updateDateFilter.value || [])"
+                    (onClearClick)="filter(undefined)"
+                    [showButtonBar]="true"
+                    [firstDayOfWeek]="1"
+                    placeholder="Select date range"
+                  />
+                </ng-template>
+              </p-columnFilter>
+            </th>
+            <th>
+              <p-columnFilter type="number" field="durationSec" [showMenu]="false" [showClearButton]="false"/>
+            </th>
+            <th>
+              <p-columnFilter type="text" field="description" [showMenu]="false" [matchMode]="FilterMatchMode.CONTAINS"
+                              [showClearButton]="false" placeholder="Search..."/>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-placement>
+          <tr>
+            <td>{{placement.channel}}</td>
+            <td>
+              <app-boolean-icon [value]="placement.isRadio" [neutralFalse]="true"/>
+            </td>
+            <td>{{placement.nextBroadcast | date:'medium'}}</td>
+            <td>{{placement.durationSec}}</td>
+            <td>{{placement.description}}</td>
+          </tr>
+        </ng-template>
+      </ng-container>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="20" class="text-center p-disabled">
+            <ng-container *ngIf="item.placements.length === 0; else noElBySuchFilters">
+              No placements added yet.
+            </ng-container>
+            <ng-template #noElBySuchFilters>No placements found by such filters.</ng-template>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</ng-container>

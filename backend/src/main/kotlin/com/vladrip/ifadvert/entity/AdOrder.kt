@@ -17,32 +17,34 @@ class AdOrder(
     @Enumerated(EnumType.STRING)
     var status: Status = Status.NEW,
     var onlyDesign: Boolean = false,
-    var costCents: Int?,
+    var costCents: Int? = null,
     var budgetCents: Int,
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    var placements: List<Placement> = listOf(),
+    var placements: MutableList<Placement> = mutableListOf(),
     @Type(JsonType::class)
     @Column(columnDefinition = "json")
-    var designs: List<String> = listOf(),
+    var designs: MutableList<String> = mutableListOf(),
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
-    var warehouse: Warehouse,
+    var warehouse: Warehouse? = null,
     @ManyToMany
     @JoinTable(
         name = "ad_order_user",
         joinColumns = [JoinColumn(name = "ad_order_id")],
         inverseJoinColumns = [JoinColumn(name = "user_id")]
     )
-    var users: List<User> = listOf(),
+    var users: MutableList<User> = mutableListOf(),
     @ManyToMany
     @JoinTable(
         name = "ad_order_contract",
         joinColumns = [JoinColumn(name = "ad_order_id")],
         inverseJoinColumns = [JoinColumn(name = "contract_id")]
     )
-    var contracts: List<Contract> = listOf(),
+    var contracts: MutableList<Contract> = mutableListOf(),
 ) {
+    constructor() : this(id = 0, name = "", budgetCents = 0)
+
     enum class AdType {
         BILLBOARD,
         BROADCAST,
@@ -67,11 +69,11 @@ class AdOrder(
         abstract val description: String
 
         data class BillboardPlacement(
-            val billboardId: Long,
+            val boardId: Long,
             val latitude: Float,
             val longitude: Float,
             val direction: Direction,
-            val picture: String,
+            val picture: String?,
             override val description: String = "",
         ) : Placement() {
             enum class Direction {
@@ -85,6 +87,7 @@ class AdOrder(
         data class TransportPlacement(
             val vehicleId: String,
             val type: VehicleType,
+            val picture: String?,
             override val description: String = "",
         ) : Placement() {
             enum class VehicleType {
@@ -97,7 +100,7 @@ class AdOrder(
         data class BroadcastPlacement(
             val channel: String,
             val isRadio: Boolean,
-            val nextBroadcast: LocalDateTime,
+            val nextBroadcast: LocalDateTime?,
             val durationSec: Int,
             override val description: String = "",
         ) : Placement()

@@ -16,13 +16,17 @@ class User(
     var password: String,
     var firstName: String,
     var lastName: String,
+    var isDisabled: Boolean = false,
     @Enumerated(EnumType.STRING)
     var role: Role = Role.CUSTOMER,
 ) {
     @ManyToMany(mappedBy = "users")
-    var adOrders: List<AdOrder> = listOf()
+    var adOrders: MutableList<AdOrder> = mutableListOf()
 
     enum class Role {
-        CUSTOMER, AGENT, DESIGNER, WORKER
+        CUSTOMER,
+        AGENT,
+        DESIGNER,
+        WORKER,
     }
 }

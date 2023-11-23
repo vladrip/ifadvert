@@ -2,11 +2,10 @@ package com.vladrip.ifadvert.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
-import java.util.*
 
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-class ItemNotFoundException : RuntimeException {
+class ItemNotFoundException: RuntimeException {
     constructor() : super(DEFAULT_MESSAGE)
     constructor(message: String?) : super(message)
 

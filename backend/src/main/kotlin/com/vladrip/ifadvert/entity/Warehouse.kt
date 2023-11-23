@@ -16,5 +16,5 @@ class Warehouse(
     var inventory: Map<String, Int> = mapOf()
 ) {
     @OneToMany(mappedBy = "warehouse")
-    var adOrders: List<AdOrder> = listOf()
+    var adOrders: MutableList<AdOrder> = mutableListOf()
 }
