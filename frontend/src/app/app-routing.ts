@@ -14,7 +14,12 @@ const routes: Routes = [
   {
     path: 'login',
     canMatch: [notAuthenticatedGuard],
-    loadComponent: () => import('./components/common/login/login.component').then(m => m.LoginComponent)
+    loadComponent: () => import('@components/common/auth/auth.component').then(m => m.AuthComponent)
+  },
+  {
+    path: 'register',
+    canMatch: [notAuthenticatedGuard],
+    loadComponent: () => import('@components/common/auth/auth.component').then(m => m.AuthComponent)
   },
   {
     path: 'app',

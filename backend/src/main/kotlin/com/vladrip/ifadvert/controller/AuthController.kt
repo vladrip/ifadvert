@@ -2,10 +2,12 @@ package com.vladrip.ifadvert.controller
 
 import com.vladrip.ifadvert.dto.CredentialsDto
 import com.vladrip.ifadvert.dto.LoginResponse
+import com.vladrip.ifadvert.dto.RegistrationDto
 import com.vladrip.ifadvert.dto.TokenDto
 import com.vladrip.ifadvert.service.AuthService
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.*
 
@@ -20,8 +22,13 @@ class AuthController(
     private val cookieSecured: Boolean = false,
 ) {
 
+    @PostMapping("/register")
+    fun register(@Valid @RequestBody registrationDto: RegistrationDto) {
+        authService.register(registrationDto)
+    }
+
     @PostMapping("/login")
-    fun login(@RequestBody credentialsDto: CredentialsDto, response: HttpServletResponse): LoginResponse {
+    fun login(@Valid @RequestBody credentialsDto: CredentialsDto, response: HttpServletResponse): LoginResponse {
         val loginResponse: LoginResponse = authService.login(credentialsDto)
         addRefreshTokenCookie(response, loginResponse.refreshToken)
         return loginResponse

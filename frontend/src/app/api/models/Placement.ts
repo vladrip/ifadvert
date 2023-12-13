@@ -1,5 +1,5 @@
-import { Direction } from './enums/direction';
-import { VehicleType } from './enums/vehicle-type';
+import { Direction } from './enums/Direction';
+import { VehicleType } from './enums/VehicleType';
 
 export interface Placement {
   description: string;

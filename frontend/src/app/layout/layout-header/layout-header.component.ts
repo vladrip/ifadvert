@@ -13,14 +13,14 @@ export class LayoutHeaderComponent {
     {
       label: 'My ad orders',
       icon: 'fa fa-briefcase',
-      command: () => this.router.createUrlTree(['/app/ad-orders']),
+      command: () => this.router.navigate(['/app/ad-orders']),
     },
     {
       label: 'Logout',
       icon: 'fa fa-right-from-bracket',
       command: () => {
-        this.authService.logout()
-        this.router.createUrlTree(['/login'])
+        this.authService.logout();
+        return this.router.navigate(['/app/login'])
       },
     }
   ]

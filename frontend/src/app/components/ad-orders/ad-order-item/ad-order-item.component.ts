@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdOrderHttpService } from '@apiServices/ad-order-http.service';
 import { finalize } from 'rxjs';
-import { AdType } from '@models/enums/ad-type';
+import { AdType } from '@models/enums/AdType';
 import { getAdTypeIcon } from '@utils/IconMappings';
 import { InputNumberInputEvent } from 'primeng/inputnumber';
-import { FormAdOrder } from '@models/form-ad-order';
+import { FormAdOrder } from '@models/FormAdOrder';
 import { ToastService } from '@services/toast.service';
 
 @Component({

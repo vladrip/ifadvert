@@ -1,10 +1,10 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { AdOrderHttpService } from '@apiServices/ad-order-http.service';
-import { AdOrder } from '@models/ad-order';
+import { AdOrder } from '@models/AdOrder';
 import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AdType } from '@models/enums/ad-type';
-import { Status } from '@models/enums/status';
+import { AdType } from '@models/enums/AdType';
+import { Status } from '@models/enums/Status';
 import { FilterMatchMode, MenuItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getAdTypeIcon } from '@utils/IconMappings';

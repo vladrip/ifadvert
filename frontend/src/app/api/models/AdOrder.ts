@@ -1,6 +1,6 @@
-import { Status } from './enums/status';
-import { BillboardPlacement, BroadcastPlacement, TransportPlacement } from './placement';
-import { FormAdOrder } from '@models/form-ad-order';
+import { Status } from './enums/Status';
+import { BillboardPlacement, BroadcastPlacement, TransportPlacement } from './Placement';
+import { FormAdOrder } from '@models/FormAdOrder';
 
 export class AdOrder extends FormAdOrder {
   id?: number;

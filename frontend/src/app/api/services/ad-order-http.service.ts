@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API } from '@constants/constants';
-import { AdOrder } from '@models/ad-order';
-import { FormAdOrder } from '@models/form-ad-order';
+import { AdOrder } from '@models/AdOrder';
+import { FormAdOrder } from '@models/FormAdOrder';
 
 @Injectable({providedIn: 'root'})
 export class AdOrderHttpService {

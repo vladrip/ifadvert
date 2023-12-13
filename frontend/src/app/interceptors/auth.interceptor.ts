@@ -16,11 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!req.url.startsWith(`${API}`)) {
-      return next.handle(req);
-    }
-
-    if (req.url.endsWith("login") || req.url.endsWith("refresh-token")) {
+    const url = req.url;
+    if (!url.startsWith(`${API}`) || url.endsWith("register") || url.endsWith("login") || url.endsWith("refresh-token")) {
       return next.handle(req);
     }
 

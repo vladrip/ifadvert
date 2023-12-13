@@ -1,14 +1,15 @@
 package com.vladrip.ifadvert.service
 
-import com.vladrip.ifadvert.dto.AuthUserDto
-import com.vladrip.ifadvert.dto.CredentialsDto
-import com.vladrip.ifadvert.dto.LoginResponse
-import com.vladrip.ifadvert.dto.TokensDto
+import com.vladrip.ifadvert.dto.*
+import com.vladrip.ifadvert.mapper.Mapper
+import com.vladrip.ifadvert.repository.UserRepository
 import com.vladrip.ifadvert.security.DatabaseUserService
+import jakarta.validation.ValidationException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -18,8 +19,19 @@ class AuthService(
     val databaseUserService: DatabaseUserService,
     val userService: UserService,
     val jwtTokenService: JwtTokenService,
-    val authenticationManager: AuthenticationManager
+    val authenticationManager: AuthenticationManager,
+    val userRepository: UserRepository,
+    val passwordEncoder: PasswordEncoder,
+    val mapper: Mapper,
 ) {
+
+    fun register(registrationDto: RegistrationDto) {
+        if (registrationDto.password != registrationDto.passwordConfirm)
+            throw ValidationException("Password and its confirmation do not match")
+
+        val user = mapper.toUser(registrationDto, passwordEncoder.encode(registrationDto.password))
+        userRepository.save(user)
+    }
 
     fun login(credentialsDto: CredentialsDto): LoginResponse {
         authenticationManager.authenticate(

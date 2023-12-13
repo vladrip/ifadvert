@@ -1,6 +1,6 @@
-import { AdType } from '@models/enums/ad-type';
-import { VehicleType } from '@models/enums/vehicle-type';
-import { Direction } from '@models/enums/direction';
+import { AdType } from '@models/enums/AdType';
+import { VehicleType } from '@models/enums/VehicleType';
+import { Direction } from '@models/enums/Direction';
 
 export function getAdTypeIcon(type: AdType | string) {
   switch (type) {

@@ -11,20 +11,20 @@ class User(
     var id: Long,
     @Column(unique = true)
     var email: String,
-    var phoneNumber: String?,
+    var phone: String?,
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     var password: String,
-    var firstName: String,
-    var lastName: String,
+    var firstname: String,
+    var lastname: String,
     var isDisabled: Boolean = false,
     @Enumerated(EnumType.STRING)
-    var role: Role = Role.CUSTOMER,
+    var role: Role = Role.CLIENT,
 ) {
     @ManyToMany(mappedBy = "users")
     var adOrders: MutableList<AdOrder> = mutableListOf()
 
     enum class Role {
-        CUSTOMER,
+        CLIENT,
         AGENT,
         DESIGNER,
         WORKER,

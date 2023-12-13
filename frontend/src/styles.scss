@@ -1,3 +1,14 @@
 body {
   margin: 0;
 }
+
+label.required {
+  &:after {
+    content: ' *';
+    color: red;
+  }
+}
+
+.p-toast-icon-close {
+  flex-shrink: 0;
+}

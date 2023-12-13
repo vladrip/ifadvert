@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AdOrder } from '@models/ad-order';
+import { AdOrder } from '@models/AdOrder';
 import { ActivatedRoute } from '@angular/router';
 import { AdOrderHttpService } from '@apiServices/ad-order-http.service';
 import { finalize } from 'rxjs';
 import { getAdTypeIcon, getDirectionIcon, getVehicleTypeIcon } from '@utils/IconMappings';
-import { AdType } from '@models/enums/ad-type';
+import { AdType } from '@models/enums/AdType';
 import { FilterMatchMode } from 'primeng/api';
-import { VehicleType } from '@models/enums/vehicle-type';
-import { Direction } from '@models/enums/direction';
+import { VehicleType } from '@models/enums/VehicleType';
+import { Direction } from '@models/enums/Direction';
 
 @Component({
   selector: 'app-ad-order-view',

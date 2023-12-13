@@ -2,7 +2,7 @@
 <ng-container *ngIf="!loading">
   <div class="flex justify-content-between align-items-center mb-4">
     <div class="flex gap-5 align-items-center">
-      <p-button icon="fa fa-arrow-left fa-lg" routerLink="/app/ad-orders" />
+      <p-button icon="fa fa-arrow-left fa-lg" class="mr-3" routerLink="/app/ad-orders" />
       <p-tag [value]="item.type | titlecase" styleClass="tag">
         <ng-template pTemplate="icon"><i [class]="getAdTypeIcon(item.type) + ' fa-xl'"></i></ng-template>
       </p-tag>
@@ -36,10 +36,12 @@
   <div *ngIf="item.designs.length > 0" class="text-center my-5">
     <h3 class="text-primary text-center mb-2">Designs</h3>
     <p-galleria [value]="item.designs" [responsiveOptions]="responsiveOptions" [circular]="true" [autoPlay]="true" [showItemNavigatorsOnHover]="true"
-                [showThumbnails]="false" [showItemNavigators]="true" [showIndicators]="true" indicatorsPosition="top" styleclass=""
-                [containerStyle]="{'width': '1200px', 'height': '600px', 'border': '4px solid var(--primary-color)', 'margin': '0 auto'}">
+                [showThumbnails]="false" [showItemNavigators]="true" [showIndicators]="true" indicatorsPosition="top"
+                [containerStyle]="{'max-width': '1200px', 'height': '90vh', 'border': '4px solid var(--primary-color)', 'margin': '0 auto'}">
       <ng-template pTemplate="item" let-design>
-          <img ngSrc="{{design}}" width="1000" height="500" style="object-fit: contain" alt="design image"/>
+        <div style="height: 80vh">
+          <img ngSrc="{{design}}" fill="true" style="object-fit: contain;" loading="eager" alt="design picture"/>
+        </div>
       </ng-template>
     </p-galleria>
   </div>

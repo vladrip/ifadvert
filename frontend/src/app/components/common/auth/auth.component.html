@@ -1,0 +1,86 @@
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div class="auth-card">
+      <div class="w-full surface-card py-6 px-5 sm:px-8">
+        <div class="text-center mb-4">
+          <div class="text-900 text-2xl font-medium mb-2">Welcome, user!</div>
+          <span class="text-600 font-medium">{{isLogin ? 'Sign in to continue' : 'Fill out registration form'}}</span>
+        </div>
+
+        <form #form="ngForm" (ngSubmit)="form.valid && onSubmit()" class="flex flex-column" novalidate>
+          <div class="grid p-fluid">
+            <div class="col-12 mb-2">
+              <label htmlfor="email" class="required">Email</label>
+              <input pInputText #email="ngModel" id="email" name="email" [(ngModel)]="authData.email"
+                     type="email" placeholder="Email adress" required
+                     pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+">
+              <small [ngxErrors]="email.control" class="p-error block">
+                <div ngxError="pattern">Invalid email</div>
+              </small>
+            </div>
+
+            <div class="col-12 mb-2">
+              <label htmlfor="password" class="required">Password</label>
+              <p-password
+                weakLabel="Password should have a number, 1 lowercase and 1 uppercase letter, and have length of 8 and more"
+                mediumLabel="Sufficient" strongLabel="Strong" promptLabel="Enter password"
+                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
+                mediumRegex="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
+                strongRegex="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,}$"
+                required minlength="8" validateEqual="passwordConfirm" validationEqualReverse="true"
+                #password="ngModel" id="password" name="password" [(ngModel)]="authData.password"
+                [toggleMask]="true"
+              />
+              <small [ngxErrors]="password.control" class="p-error block">
+                <div ngxError="minlength">Password should have length of 8 and more symbols</div>
+              </small>
+            </div>
+
+            <ng-container *ngIf="!isLogin">
+              <div class="col-12 mb-2">
+                <label htmlfor="passwordConfirm" class="required">Confirm your password</label>
+                <p-password
+                  #passwordConfirm="ngModel" id="passwordConfirm" name="passwordConfirm"
+                  [(ngModel)]="authData.passwordConfirm"
+                  required validateEqual="password"
+                  [toggleMask]="true" [feedback]="false"
+                />
+                <small [ngxErrors]="passwordConfirm.control" class="p-error block">
+                  <div ngxError="validateEqual">Passwords don't match</div>
+                </small>
+              </div>
+
+              <div class="col-6 mb-2">
+                <label htmlfor="firstname" class="required">First name</label>
+                <input pInputText #firstname="ngModel" id="firstname" name="firstname" [(ngModel)]="authData.firstname"
+                       placeholder="First name" required>
+              </div>
+
+              <div class="col-6 mb-2">
+                <label htmlfor="lastname" class="required">Last name</label>
+                <input pInputText #lastname="ngModel" id="lastname" name="lastname" [(ngModel)]="authData.lastname"
+                       placeholder="Last name" required>
+              </div>
+
+              <div class="col-12 mb-2">
+                <label htmlfor="phone">Phone number</label>
+                <input pInputText #phone="ngModel" id="phone" name="phone" [(ngModel)]="authData.phone"
+                       placeholder="Format: +380992281337" required
+                       pattern="^\+[1-9]\d{1,14}$">
+                <small [ngxErrors]="phone.control" showWhen="touchedAndDirty" class="p-error block">
+                  <div ngxError="pattern">Invalid phone number, should look like +380992281337</div>
+                </small>
+              </div>
+            </ng-container>
+
+<!--            <div *ngIf="isLogin" class="col-12 flex align-items-start justify-content-end">-->
+<!--              <a class="font-medium no-underline cursor-pointer text-primary">Forgot password?</a>-->
+<!--            </div>-->
+            <button pButton pRipple type="submit" label="{{isLogin ? 'Sign in' : 'Register'}}"
+                    class="w-full mx-2 mt-3 text-xl"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

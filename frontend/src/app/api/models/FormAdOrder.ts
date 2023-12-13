@@ -1,4 +1,4 @@
-import { AdType } from '@models/enums/ad-type';
+import { AdType } from '@models/enums/AdType';
 
 export class FormAdOrder {
   name: string = '';

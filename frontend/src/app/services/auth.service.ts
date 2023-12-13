@@ -1,14 +1,15 @@
 import { delay, first, map, Observable, of, ReplaySubject, tap } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthHttpService } from '@apiServices/auth-http.service';
-import { LoginResponse } from '@models/login-response';
-import { AuthUser } from '@models/auth-user';
-import { Credentials } from '@models/credentials';
-import { AccessToken } from '@models/access-token';
+import { LoginResponse } from '@models/LoginResponse';
+import { AuthUser } from '@models/AuthUser';
+import { Credentials } from '@models/Credentials';
+import { AccessToken } from '@models/AccessToken';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_EXPIRATION_KEY, USER_KEY } from '@constants/storage-keys';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { AuthData } from '@models/AuthData';
 
 
 @Injectable({providedIn: 'root'})
@@ -26,20 +27,24 @@ export class AuthService {
     }
   }
 
+  register(authData: AuthData) {
+    return this.authHttpService.register(authData);
+  }
+
   login(credentials: Credentials) {
     return this.authHttpService.login(credentials)
       .pipe(tap(loginResponse => {
-        this.persistAuthData(loginResponse);
+        this.storeAuthData(loginResponse);
         this._user$.next(this.getUser());
       }));
   }
 
   refreshToken() {
     return this.authHttpService.refreshToken()
-      .pipe(tap(tokenResponse => this.persistRefreshData(tokenResponse) ));
+      .pipe(tap(tokenResponse => this.storeRefreshData(tokenResponse) ));
   }
 
-  private persistAuthData(loginResponse: LoginResponse) {
+  private storeAuthData(loginResponse: LoginResponse) {
     localStorage.setItem(ACCESS_TOKEN_KEY, loginResponse.accessToken);
     let expirationTimestamp = this.getTokenExpiration(loginResponse.refreshToken)!;
     localStorage.setItem(REFRESH_TOKEN_EXPIRATION_KEY, expirationTimestamp.toString());
@@ -47,7 +52,7 @@ export class AuthService {
     this.runTokenExpirationTimeout(expirationTimestamp);
   }
 
-  private persistRefreshData(tokenResponse: AccessToken) {
+  private storeRefreshData(tokenResponse: AccessToken) {
     localStorage.setItem(ACCESS_TOKEN_KEY, tokenResponse.accessToken);
   }
 
