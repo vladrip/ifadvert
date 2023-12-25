@@ -6,7 +6,7 @@
 <p-contextMenu #adOrderActions [model]="contextMenuItems"/>
 <p-table [value]="adOrders" dataKey="id" [loading]="loading"
          styleClass="p-datatable-striped" responsiveLayout="scroll" [contextMenu]="adOrderActions"
-         [(contextMenuSelection)]="selected" (onContextMenuSelect)="initContextMenu()">
+         [(contextMenuSelection)]="selected" (onContextMenuSelect)="initContextMenu()" scrollHeight="70vh">
   <ng-template pTemplate="header">
     <tr>
       <th style="width:10em" pSortableColumn="id">ID<p-sortIcon field="id"/></th>
@@ -82,7 +82,7 @@
       <td>${{order.budgetCents / 100 | number}}</td>
       <td>${{order.costCents / 100 | number}}</td>
       <td>
-        <app-boolean-icon [value]="order.onlyDesign" [neutralFalse]="true"/>
+        <boolean-icon [value]="order.onlyDesign" [neutralFalse]="true"/>
       </td>
     </tr>
   </ng-template>

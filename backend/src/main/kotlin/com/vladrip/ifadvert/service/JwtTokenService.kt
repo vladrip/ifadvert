@@ -15,13 +15,13 @@ import java.util.*
 @Component
 class JwtTokenService(
     @Value("\${jwt.access.secret}")
-    private val accessSecret: String,
+    val accessSecret: String,
     @Value("\${jwt.refresh.secret}")
-    private val refreshSecret: String,
+    val refreshSecret: String,
     @Value("\${jwt.access.validity-time}")
-    private val jwtAccessLifeTime: Duration,
+    val jwtAccessLifeTime: Duration,
     @Value("\${jwt.refresh.validity-time}")
-    private val jwtRefreshLifeTime: Duration,
+    val jwtRefreshLifeTime: Duration,
 ) {
     private val accessSecretKey = Keys.hmacShaKeyFor(accessSecret.toByteArray())
     private val refreshSecretKey = Keys.hmacShaKeyFor(refreshSecret.toByteArray())

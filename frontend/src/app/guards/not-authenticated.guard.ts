@@ -6,5 +6,5 @@ import { inject } from '@angular/core';
 export const notAuthenticatedGuard = () => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
-  return !authService.isAuthenticated() || router.createUrlTree(['/app']);
+  return !authService.isAuthenticated() || router.createUrlTree(['app/ad-orders']);
 }

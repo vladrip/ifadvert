@@ -12,6 +12,7 @@ class AdOrderController(
     private val adOrderService: AdOrderService
 ) {
 
+    //TODO: don't fetch placements and designs
     @GetMapping
     fun getAll(authentication: Authentication) = adOrderService.getAll(authentication.name)
 

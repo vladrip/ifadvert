@@ -1,18 +1,18 @@
 <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen">
   <div class="flex flex-column align-items-center justify-content-center">
     <div class="auth-card">
-      <div class="w-full surface-card py-6 px-5 sm:px-8">
+      <div class="w-full surface-card py-5 px-5 sm:px-8">
         <div class="text-center mb-4">
           <div class="text-900 text-2xl font-medium mb-2">Welcome, user!</div>
           <span class="text-600 font-medium">{{isLogin ? 'Sign in to continue' : 'Fill out registration form'}}</span>
         </div>
 
-        <form #form="ngForm" (ngSubmit)="form.valid && onSubmit()" class="flex flex-column" novalidate>
+        <form #form="ngForm" (ngSubmit)="form.valid && onSubmit()" class="flex flex-column">
           <div class="grid p-fluid">
             <div class="col-12 mb-2">
               <label htmlfor="email" class="required">Email</label>
               <input pInputText #email="ngModel" id="email" name="email" [(ngModel)]="authData.email"
-                     type="email" placeholder="Email adress" required
+                     type="email" placeholder="Email adress" required autocomplete="new-password"
                      pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+">
               <small [ngxErrors]="email.control" class="p-error block">
                 <div ngxError="pattern">Invalid email</div>
@@ -24,12 +24,12 @@
               <p-password
                 weakLabel="Password should have a number, 1 lowercase and 1 uppercase letter, and have length of 8 and more"
                 mediumLabel="Sufficient" strongLabel="Strong" promptLabel="Enter password"
-                pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
+                pattern="{{isLogin ? '.+' : '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'}}"
                 mediumRegex="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$"
                 strongRegex="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{12,}$"
                 required minlength="8" validateEqual="passwordConfirm" validationEqualReverse="true"
                 #password="ngModel" id="password" name="password" [(ngModel)]="authData.password"
-                [toggleMask]="true"
+                [toggleMask]="true" [feedback]="!isLogin" autocomplete="new-password"
               />
               <small [ngxErrors]="password.control" class="p-error block">
                 <div ngxError="minlength">Password should have length of 8 and more symbols</div>
@@ -66,18 +66,26 @@
                 <label htmlfor="phone">Phone number</label>
                 <input pInputText #phone="ngModel" id="phone" name="phone" [(ngModel)]="authData.phone"
                        placeholder="Format: +380992281337" required
-                       pattern="^\+[1-9]\d{1,14}$">
+                       pattern="^\+\d{10,12}$">
                 <small [ngxErrors]="phone.control" showWhen="touchedAndDirty" class="p-error block">
                   <div ngxError="pattern">Invalid phone number, should look like +380992281337</div>
                 </small>
               </div>
             </ng-container>
 
-<!--            <div *ngIf="isLogin" class="col-12 flex align-items-start justify-content-end">-->
-<!--              <a class="font-medium no-underline cursor-pointer text-primary">Forgot password?</a>-->
-<!--            </div>-->
             <button pButton pRipple type="submit" label="{{isLogin ? 'Sign in' : 'Register'}}"
-                    class="w-full mx-2 mt-3 text-xl"></button>
+                    class="w-full mx-2 mt-3 text-xl" [loading]="saving"></button>
+
+            <p class="ml-auto mr-2 mt-3">
+              <ng-container *ngIf="isLogin; else isRegister">
+                Don't have an account yet?
+                <a class="auth-form-link" routerLink="/register"> Register.</a>
+              </ng-container>
+              <ng-template #isRegister>
+                Already have an account?
+                <a class="auth-form-link" routerLink="/login"> Sign in.</a>
+              </ng-template>
+            </p>
           </div>
         </form>
       </div>

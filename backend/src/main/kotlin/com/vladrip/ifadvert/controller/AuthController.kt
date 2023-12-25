@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
-    private val authService: AuthService,
+    val authService: AuthService,
     @Value("\${jwt.refresh.cookies.http-only}")
-    private val cookieHttpOnly: Boolean = false,
+    val cookieHttpOnly: Boolean = false,
     @Value("\${jwt.refresh.cookies.secured}")
-    private val cookieSecured: Boolean = false,
+    val cookieSecured: Boolean = false,
 ) {
 
     @PostMapping("/register")

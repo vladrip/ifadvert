@@ -60,7 +60,8 @@ export class AuthComponent {
         takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.router.navigate(['/app/ad-orders']),
-        error: console.error
+        //TODO: improve error handling, use error message from backend
+        error: () => this.toastService.error("Invalid email or password")
       });
   }
 
@@ -75,7 +76,8 @@ export class AuthComponent {
           this.toastService.success('You registered successfully, now sign in with your email and password');
           return this.router.navigate(['/app/login']);
         },
-        error: console.error
+        //TODO: improve error handling, use error message from backend
+        error: () => this.toastService.error("Error while registering. Try again later")
       });
   }
 

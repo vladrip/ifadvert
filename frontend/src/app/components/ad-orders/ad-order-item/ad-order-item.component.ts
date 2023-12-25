@@ -14,20 +14,20 @@ import { ToastService } from '@services/toast.service';
   styleUrls: ['./ad-order-item.component.scss']
 })
 export class AdOrderItemComponent implements OnInit {
+  protected readonly getAdTypeIcon = getAdTypeIcon;
   item: FormAdOrder = new FormAdOrder();
   itemId?: number;
   isEdit = false;
   loading = true;
   saving = false;
   adTypes = Object.values(AdType);
+  returnToView: boolean = false;
 
   constructor(private route: ActivatedRoute,
               private dataService: AdOrderHttpService,
               private router: Router,
               private toastService: ToastService) {
   }
-
-  protected readonly getAdTypeIcon = getAdTypeIcon;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -37,6 +37,7 @@ export class AdOrderItemComponent implements OnInit {
         this.getItem(this.itemId);
       } else this.loading = false;
     });
+    this.route.queryParams.subscribe(params => this.returnToView = params['back'] === 'view');
   }
 
   getItem(id: number) {
@@ -50,10 +51,7 @@ export class AdOrderItemComponent implements OnInit {
 
   onSubmit() {
     this.saving = true;
-    if (this.isEdit) this.updateAdOrder();
-    else this.createAdOrder();
-
-    this.router.createUrlTree(['/app/ad-orders']);
+    this.isEdit ? this.updateAdOrder() : this.createAdOrder();
   }
 
   createAdOrder() {
@@ -61,8 +59,8 @@ export class AdOrderItemComponent implements OnInit {
       .pipe(finalize(() => this.saving = false))
       .subscribe({
         next: () => {
-          this.router.navigate(["/app/ad-orders"])
-          this.toastService.success("You successfully created an advertisement order!\nWait until our agent contacts you");
+          this.toastService.success('You successfully created an advertisement order!\nWait until our agent contacts you');
+          return this.navigateBack();
         },
         error: this.toastService.handleHttpError
       });
@@ -74,12 +72,19 @@ export class AdOrderItemComponent implements OnInit {
       .subscribe({
         next: formAdOrder => {
           this.item = formAdOrder;
-          this.toastService.success("Updated the order successfully");
+          this.toastService.success('Updated the order successfully');
+          return this.navigateBack();
         },
         error: this.toastService.handleHttpError
       });
   }
 
+  navigateBack() {
+    const route = this.returnToView ? `app/ad-orders/view/${this.itemId}` : 'app/ad-orders';
+    return this.router.navigate([route]);
+  }
+
+  //FIXME: bug when using browser form autofill (onInput doesn't get called)
   onBudgetInput(event: InputNumberInputEvent) {
     this.item.budgetCents = Number(event.value) * 100;
   }

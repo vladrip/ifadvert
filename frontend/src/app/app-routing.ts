@@ -9,6 +9,7 @@ import { notAuthenticatedGuard } from '@guards/not-authenticated.guard';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     loadComponent: () => import('./components/common/landing/landing.component').then(m => m.LandingComponent)
   },
   {

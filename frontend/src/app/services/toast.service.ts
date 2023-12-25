@@ -28,11 +28,12 @@ export class ToastService {
     }
 
     success(summary: string, details?: string) {
-      this.show('success', summary, details, 3000);
+      this.show('success', summary, details, 5000);
     }
 
     error(summary: string, details?: string) {
       this.show('error', summary, details, 10000);
+      console.error(summary);
     }
 
     warning(summary: string, details?: string) {

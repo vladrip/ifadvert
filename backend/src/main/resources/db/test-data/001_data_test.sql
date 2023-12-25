@@ -1,5 +1,5 @@
 INSERT INTO users (email, firstname, lastname, password, phone, role, is_disabled) VALUES
-('customer@gmail.com', 'Joe', 'Biden', '$2a$10$/na8o2yjtEo0heyv0ZOuiONhRQDdeVHzze47fe6yH70EAUiQzaRfu', '+12345678900', 'CLIENT', false),
+('client@gmail.com', 'Joe', 'Biden', '$2a$10$/na8o2yjtEo0heyv0ZOuiONhRQDdeVHzze47fe6yH70EAUiQzaRfu', '+12345678900', 'CLIENT', false),
 ('agent@gmail.com', 'Donald', 'Trump', '$2a$10$/na8o2yjtEo0heyv0ZOuiONhRQDdeVHzze47fe6yH70EAUiQzaRfu', '+12345678901', 'AGENT', false),
 ('designer@gmail.com', 'Barack', 'Obama', '$2a$10$/na8o2yjtEo0heyv0ZOuiONhRQDdeVHzze47fe6yH70EAUiQzaRfu', '+12345678902', 'DESIGNER', false),
 ('worker@gmail.com', 'George', 'Bush', '$2a$10$/na8o2yjtEo0heyv0ZOuiONhRQDdeVHzze47fe6yH70EAUiQzaRfu', '+12345678903', 'WORKER', false),

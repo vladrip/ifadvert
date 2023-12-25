@@ -15,7 +15,8 @@
         </ng-template>
       </p-tag>
     </div>
-    <p-button icon="fa fa-pencil" routerLink="../item/{{itemId}}"></p-button>
+
+    <p-button icon="fa fa-pencil" (onClick)="navigateToEdit()"></p-button>
   </div>
 
   <h2 class="text-primary">{{item.name}}</h2>
@@ -33,9 +34,9 @@
     </div>
   </div>
 
-  <div *ngIf="item.designs.length > 0" class="text-center my-5">
+  <div *ngIf="item.designs.length > 0; else noDesigns" class="text-center my-5">
     <h3 class="text-primary text-center mb-2">Designs</h3>
-    <p-galleria [value]="item.designs" [responsiveOptions]="responsiveOptions" [circular]="true" [autoPlay]="true" [showItemNavigatorsOnHover]="true"
+    <p-galleria [value]="item.designs" [responsiveOptions]="responsiveOptions" [circular]="true" [showItemNavigatorsOnHover]="true"
                 [showThumbnails]="false" [showItemNavigators]="true" [showIndicators]="true" indicatorsPosition="top"
                 [containerStyle]="{'max-width': '1200px', 'height': '90vh', 'border': '4px solid var(--primary-color)', 'margin': '0 auto'}">
       <ng-template pTemplate="item" let-design>
@@ -45,6 +46,9 @@
       </ng-template>
     </p-galleria>
   </div>
+  <ng-template #noDesigns>
+    <h4 class="text-gray-500 text-center">No designs yet</h4>
+  </ng-template>
 
   <div *ngIf="!item.onlyDesign" class="mt-6">
     <h3 class="text-primary text-center mb-2">Placements</h3>
@@ -215,7 +219,7 @@
           <tr>
             <td>{{placement.channel}}</td>
             <td>
-              <app-boolean-icon [value]="placement.isRadio" [neutralFalse]="true"/>
+              <boolean-icon [value]="placement.isRadio" [neutralFalse]="true"/>
             </td>
             <td>{{placement.nextBroadcast | date:'medium'}}</td>
             <td>{{placement.durationSec}}</td>

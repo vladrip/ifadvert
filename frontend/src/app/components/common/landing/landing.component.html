@@ -16,8 +16,18 @@
     </ul>
   </div>
   <div class="flex gap-5">
-    <button pButton pRipple label="Sign in" routerLink="/login" class="p-button-text p-button-round"></button>
-    <button pButton pRipple label="Register" routerLink="/register" class="p-button-rounded"></button>
+    <div *ngIf="authService.user$ | async; else notAuthenticated" class="cursor-pointer"
+         (click)="router.navigate(['app/ad-orders'])">
+      <p-avatar icon="fa fa-user"
+                size="large"
+                [style]="{color: 'white', 'background-color': 'var(--primary-color)'}"
+                styleClass="user-avatar"
+                shape="circle"/>
+    </div>
+    <ng-template #notAuthenticated>
+      <button pButton pRipple label="Sign in" routerLink="/login" class="p-button-text p-button-round"></button>
+      <button pButton pRipple label="Register" routerLink="/register" class="p-button-rounded"></button>
+    </ng-template>
   </div>
 </header>
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdOrder } from '@models/AdOrder';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdOrderHttpService } from '@apiServices/ad-order-http.service';
 import { finalize } from 'rxjs';
 import { getAdTypeIcon, getDirectionIcon, getVehicleTypeIcon } from '@utils/IconMappings';
@@ -32,7 +32,7 @@ export class AdOrderViewComponent implements OnInit {
   directions = Object.values(Direction);
   vehicleTypes = Object.values(VehicleType);
 
-  constructor(private route: ActivatedRoute, private dataService: AdOrderHttpService) {
+  constructor(private route: ActivatedRoute, private dataService: AdOrderHttpService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -52,5 +52,9 @@ export class AdOrderViewComponent implements OnInit {
         },
         error: console.error
       });
+  }
+
+  navigateToEdit() {
+    return this.router.navigate(['app/ad-orders/item/', this.itemId], {queryParams: {back: 'view'}});
   }
 }
