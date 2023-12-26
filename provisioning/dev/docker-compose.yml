@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: ifadvert_postgres
+    image: postgres:15.3
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=ifadvert
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - ifadvert-postgresql-data:/var/lib/postgresql/data
+volumes:
+  ifadvert-postgresql-data:
+    name: ifadvert-postgresql-data
